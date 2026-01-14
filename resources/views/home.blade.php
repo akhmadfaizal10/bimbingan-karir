@@ -26,10 +26,17 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            @foreach($events as $event)
-                <x-event-card :title="$event->judul" :date="$event->tanggal_waktu" :location="$event->lokasi"
-                    :price="$event->harga" :image="$event->gambar" :href="route('home')" />
-            @endforeach
+          @foreach($events as $event)
+<x-event-card
+    :event-id="$event->id"
+    :title="$event->judul"
+    :date="$event->tanggal_waktu"
+    :location="$event->lokasi"
+    :price="$event->tikets->min('harga')"
+    :image="$event->gambar"
+/>
+@endforeach
+
         </div>
     </section>
 </x-layouts.app>

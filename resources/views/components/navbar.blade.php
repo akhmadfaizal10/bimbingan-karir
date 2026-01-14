@@ -13,7 +13,31 @@
     <input  class="input w-72" placeholder="Cari Event..." />
   </div>
   <div class="navbar-end gap-2">
-    <a href="{{ route('login') }}" class="btn bg-blue-900 text-white">Login</a>
-    <a href="{{ route('register') }}" class="btn text-blue-900">Register</a>
-  </div>
+
+    {{-- JIKA BELUM LOGIN --}}
+    @guest
+        <a href="{{ route('login') }}" class="btn bg-blue-900 text-white">
+            Login
+        </a>
+        <a href="{{ route('register') }}" class="btn text-blue-900">
+            Register
+        </a>
+    @endguest
+
+    {{-- JIKA SUDAH LOGIN --}}
+    @auth
+        <span class="font-semibold text-blue-900">
+            {{ Auth::user()->name }}
+        </span>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="btn btn-error text-white">
+                Logout
+            </button>
+        </form>
+    @endauth
+
+</div>
+
 </div>

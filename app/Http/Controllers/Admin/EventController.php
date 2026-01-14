@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Models\Event;
 use App\Models\Kategori;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class EventController extends Controller
      */
  public function index()
 {
-	$events = Event::all();
+    $events = Event::with('tikets')->get();
+
 	return view('admin.event.index', compact('events'));
 }
     /**
@@ -42,10 +44,10 @@ class EventController extends Controller
 
         // Handle file upload
         if ($request->hasFile('gambar')) {
-            $imageName = time().'.'.$request->gambar->extension();
-            $request->gambar->move(public_path('images/events'), $imageName);
-            $validatedData['gambar'] = $imageName;
-        }
+    $path = $request->file('gambar')->store('events', 'public');
+    $validatedData['gambar'] = $path; // contoh: events/konser.jpg
+}
+
 
         $validatedData['user_id'] = auth()->user()->id ?? null;
 
@@ -61,7 +63,6 @@ class EventController extends Controller
         $event = Event::findOrFail($id);
         $categories = Kategori::all();
         $tickets = $event->tikets;
-
         return view('admin.event.show', compact('event', 'categories', 'tickets'));
     }
 
@@ -94,10 +95,10 @@ class EventController extends Controller
 
             // Handle file upload
             if ($request->hasFile('gambar')) {
-                $imageName = time().'.'.$request->gambar->extension();
-                $request->gambar->move(public_path('images/events'), $imageName);
-                $validatedData['gambar'] = $imageName;
-            }
+    $path = $request->file('gambar')->store('events', 'public');
+    $validatedData['gambar'] = $path; // contoh: events/konser.jpg
+}
+
 
             $event->update($validatedData);
 
@@ -117,4 +118,6 @@ class EventController extends Controller
 
         return redirect()->route('admin.events.index')->with('success', 'Event berhasil dihapus.');
     }
+
+    
 }

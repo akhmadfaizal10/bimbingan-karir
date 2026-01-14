@@ -9,6 +9,11 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Kategori;
 use App\Models\Event;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PublicEventController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +27,10 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+Route::post('/orders', [OrderController::class, 'store'])
+    ->name('orders.store');
+Route::get('/events/{id}', [PublicEventController::class, 'show'])
+    ->name('events.show');
 /*
 |--------------------------------------------------------------------------
 | Authenticated Routes
