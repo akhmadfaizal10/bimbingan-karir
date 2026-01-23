@@ -9,11 +9,20 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Kategori;
 use App\Models\Event;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PublicEventController;
+use App\Http\Controllers\Admin\EventController as AdminEventController;
+use App\Http\Controllers\User\EventController as UserEventController;
+use App\Http\Controllers\User\OrderController;
+use App\Http\Controllers\User\HomeController;
 
 
 
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+Route::post('/orders', [OrderController::class, 'store'])->name('orders.store');
+Route::get('/events/{event}', [UserEventController::class, 'show'])->name('events.show');
 
 /*
 |--------------------------------------------------------------------------
