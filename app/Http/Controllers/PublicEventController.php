@@ -12,3 +12,5 @@ class PublicEventController extends Controller
         return view('events.show', compact('event'));
     }
 }
+
+//https://folder-structure-sca-xlcj.bolt.host/ untuk mencari folder structure
