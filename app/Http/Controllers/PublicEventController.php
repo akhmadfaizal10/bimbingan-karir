@@ -11,6 +11,11 @@ class PublicEventController extends Controller
         $event = Event::with('tikets')->findOrFail($id);
         return view('events.show', compact('event'));
     }
+    public function edit($id)
+    {
+        $event = Event::with('tikets')->findOrFail($id);
+        return view('events.show', compact('event'));
+    }
 }
 
-//https://folder-structure-sca-xlcj.bolt.host/ untuk mencari folder structure
+//https://folder-structure-sca-xlcj.bolt.host/ untuk mencari folder structure tapi gaguna 
