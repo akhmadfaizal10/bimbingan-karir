@@ -2,6 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Kategori;
+use App\Models\Tiket;
+use App\Models\User;
+use App\Models\Lokasi;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,7 +18,7 @@ class Event extends Model
         'judul',
         'deskripsi',
         'tanggal_waktu',
-        'lokasi',
+        'lokasi_id',
         'kategori_id',
         'gambar',
     ];
@@ -37,4 +41,9 @@ class Event extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function lokasi()
+{
+    return $this->belongsTo(Lokasi::class);
+}
 }

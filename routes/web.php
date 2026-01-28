@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TiketController;
 use App\Http\Controllers\Admin\HistoriesController;
+use App\Http\Controllers\Admin\LokasiController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Kategori;
 use App\Models\Event;
@@ -72,6 +73,10 @@ Route::middleware('auth')->group(function () {
             Route::resource('categories', CategoryController::class);
             Route::resource('events', EventController::class);
             Route::resource('tickets', TiketController::class);
+
+            Route::resource('lokasi', LokasiController::class)
+            ->except(['show', 'create', 'edit']);
+
 
             Route::get('/histories', [HistoriesController::class, 'index'])
                 ->name('histories.index');

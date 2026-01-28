@@ -1,26 +1,21 @@
-@props([
-    'eventId',
-    'title',
-    'date',
-    'location',
-    'price',
-    'image',
-])
+props(['title', 'date', 'location', 'price','' 'image', 'href' => null])
 
 @php
-    $formattedPrice = $price
-        ? 'mulai dari Rp ' . number_format($price, 0, ',', '.')
-        : 'Harga tidak tersedia';
+// Format Indonesian price
+$formattedPrice = $price ? 'Rp ' . number_format($price, 0, ',', '.') : 'Harga tidak tersedia';
 
-    $formattedDate = $date
-        ? \Carbon\Carbon::parse($date)->locale('id')->translatedFormat('d F Y, H:i')
-        : 'Tanggal tidak tersedia';
+$formattedDate = $date
+? \Carbon\Carbon::parse($date)->locale('id')->translatedFormat('d F Y, H:i')
+: 'Tanggal tidak tersedia';
 
-    $imageUrl = $image
-        ? asset('storage/' . ltrim($image, '/'))
-        : asset('storage/events/konser.jpg');
+// Safe image URL: use external URL if provided, otherwise use asset (storage path)
+$imageUrl = $image
+? (filter_var($image, FILTER_VALIDATE_URL)
+? $image
+: asset('images/events/' . $image))
+: asset('images/konser.jpeg');
+
 @endphp
-
 <div class="card bg-base-100 h-96 shadow-sm hover:shadow-md transition-shadow duration-300">
     <figure>
         <img src="{{ $imageUrl }}" alt="{{ $title }}" class="w-full h-48 object-cover" />
